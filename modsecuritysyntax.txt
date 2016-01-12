@@ -1,0 +1,29 @@
+Apache request cycle:
+REQUEST_HEADERS
+REQUEST_BODY
+RESPONSE_HEADERS
+RESPONSE_BODY
+LOGGING
+
+SecRule <VARIABLES> <OPERATOR> [ACTIONS]
+
+e.g. SecRule ARGS "@rx attack" "phase:1,log,deny,id:1"
+Matches all GET or POST arguments that match the regular expression 'attack'
+phase:1 places this into the request headers phase
+log causes the event to be logged in apache error log and modsec audit log
+deny stops processing and intercepts the transaction
+id is a unique rule ID and is a required field
+
+e.g.
+SecAction phase:1,nolog,pass,initcol:ip=%{REMOTE_ADDR},initcol:user=%{REMOTE_ADDR}
+SecAction phase:5,t:none,nolog,pass,setvar:ip.bf_counter=0
+SecRule user:bf_block "@gt 0" "deny,status:401,log,msg:'ip address blocked for 5 minutes, more than 15 attempts in 3 mins'"
+SecRule REQUEST_FILENAME "@contains /brute" "phase:5,t:none,nolog,pass,setvar:ip.bf_counter=+1,deprecatevar:ip.bf_counter=1/20"
+SecRule ip:bf_counter "@gt 10" "t:none,setvar:user.bf_block=1,expirevar:user.bf_block=120,setvar:ip.bf_counter=0"
+
+1) In phase 1 (REQUEST_HEADERS received), don't log, pass it on, and create persistent variables IP and USER set to the remote IP
+2) In phase 5 (LOGGING), don't log, pass it on, don't transform, but set ip.bf_counter to 0
+3) If user:bf_block is greater than 0, log and deny the rest with a 401 and a custom message
+4) If request URL contains '/brute', increment the counter, decay it by 1 every 20 seconds
+5) If counter is above 10, set bf_block and expire it after 60 seconds, reset the counter
+

@@ -1,0 +1,260 @@
+{
+ "name": "Web Application Vulnerabilities",
+ "children": [
+  {
+   "name": "Weak authentication mechanism (e.g. Basic auth, IP/referer/UA based auth)",
+   "children": [
+   {
+    "name": "Spoofed header/sniffing/replay attacks",
+    "children": [
+       {"name": "Kerberos"},
+       {"name": "Digest auth (MitM/MD5 collision vulnerable)"},
+       {"name": "Certificate auth"},
+       {"name": "Form-based auth with TLS on login page and POST"},
+       {"name": "Transaction authentication"},
+       {"name": "Timing-based detection"},
+       {"name": "Two-factor, OOB and OTP auth as necessary"},
+       {"name": "Geolocation/known bad IP blocking"}
+    ]
+   }]
+  },
+  {
+   "name": "Hard-coded database credentials",
+   "children": [
+   {
+    "name": "Compromise server source to obtain credentials",
+    "children": [
+       {"name": "Static variables stored outside web root (e.g. Apache include)"},
+       {"name": "Encrypted IIS Web.config"},
+       {"name": "Java keystore"},
+       {"name": "Oracle proxy-mode auth with certificate"}
+    ]
+   }]
+  },
+  {
+   "name": "Hard-coded user login credentials (e.g. debug code)",
+   "children": [
+   {
+    "name": "Compromise server source to obtain credentials",
+    "children": [
+       {"name": "Mandated standard login API"},
+       {"name": "Developer education"},
+       {"name": "Source code review"},
+       {"name": "Brute-force testing (e.g. Brutus/Crowbar)"}
+    ]
+   }]
+  },
+  {
+   "name": "Browser cached credentials",
+   "children": [
+   {
+    "name": "Client browser store compromise",
+    "children": [
+       {"name": "Disable <form> autocomplete"}
+    ]
+   }]
+  },
+  {
+   "name": "Unrestricted login mechanism",
+   "children": [
+   {
+    "name": "Login brute-forcing",
+    "children": [
+       {"name": "WAF rate-limit/IP blocking"},
+       {"name": "Admin alerting"},
+       {"name": "Limited retry attempts"},
+       {"name": "Delay timer between attempts"}
+    ]
+   }]
+  },
+  {
+   "name": "Weak password reset mechanism (e.g. weak secret question)",
+   "children": [
+   {
+    "name": "Reset password and guess/research secret answers",
+    "children": [
+       {"name": "Require email address and username"},
+       {"name": "Choose strong secret questions and educate users (e.g. goodsecurityquestions.com)"},
+       {"name": "Email reset link only with expiry time"}
+    ]
+   }]
+  },
+  {
+   "name": "Plaintext password storage on server",
+   "children": [
+   {
+    "name": "Obtain database access through SQL injection or physical access",
+    "children": [
+       {"name": "Chained SHA hashing with salt"},
+       {"name": "Use existing libraries e.g. PBKDF2"}
+    ]
+   }]
+  },
+  {
+   "name": "Access control based on client-side data (e.g. form hidden field, cookie or URL based access control)",
+   "children": [
+   {
+    "name": "Spidering or altering client-side data to match goal (e.g. horizontal/vertical movement, find URL)",
+    "children": [
+       {"name": "Store all data for access control decisions on the server"},
+       {"name": "Source code review and testing (e.g. Wikto/DirBuster/http-dir-enumerate)"},
+       {"name": "Store restricted content in non-WWW directory and use URL re-write and server-side script to authorise/serve"},
+       {"name": "WAF filetype blocking"}
+    ]
+   }]
+  },
+  {
+   "name": "Path traversal weakness",
+   "children": [
+   {
+    "name": "Path traversal attack",
+    "children": [
+       {"name": "OS-level permission lockdown"},
+       {"name": "Application and WAF level input validation"},
+       {"name": "Web-server configuration (e.g. Apache/IIS directory rules)"}
+    ]
+   }]
+  },
+  {
+   "name": "Weak TLS/SSL setup",
+   "children": [
+   {
+    "name": "TLS/SSL protocol or implementation exploits",
+    "children": [
+       {"name": "TLS 1.0 without compression as minimum if possible"},
+       {"name": "Strong cipher suites and certificate key length"},
+       {"name": "HTTP Strict-Transport-Security header with maximum age and includeSubDomains"},
+       {"name": "Trustworthy certificate authority"},
+       {"name": "Perfect forward secrecy enabled"},
+       {"name": "ssllabs.com testing"}
+    ]
+   }]
+  },
+  {
+   "name": "Predictable Session Tokens",
+   "children": [
+   {
+    "name": "Guess valid session token",
+    "children": [
+       {"name": "Generate random session tokens using existing libraries"},
+       {"name": "Check consistent partial IP and user-agent within a session"},
+       {"name": "Session timeout"},
+       {"name": "Trustworthy certificate authority"}
+    ]
+   }]
+  },
+  {
+   "name": "No session token refresh",
+   "children": [
+   {
+    "name": "Session fixation",
+    "children": [
+       {"name": "Extra token supplied to accompany session"},
+       {"name": "Regenerate session token after login"},
+       {"name": "Session token in cookie instead of URL"},
+       {"name": "Use existing session management libraries"},
+       {"name": "Bind session to a property of the client"}
+    ]
+   }]
+  },
+  {
+   "name": "Inadequate cookie protection",
+   "children": [
+   {
+    "name": "Cookie stealing attacks e.g. XSS or MitM redirect",
+    "children": [
+       {"name": "SSL-only and HTTP-only flags on cookie"},
+       {"name": "WAF flag injection"}
+    ]
+   }]
+  },
+  {
+   "name": "Improper logout",
+   "children": [
+   {
+    "name": "Shared computer using back button",
+    "children": [
+       {"name": "Logout mechanism"},
+       {"name": "Destroy all server-side session information"},
+       {"name": "Session timeout"},
+       {"name": "Use existing libraries"}
+    ]
+   }]
+  },
+  {
+   "name": "Vulnerable request processing",
+   "children": [
+   {
+    "name": "Cross-site Request Forgery (CSRF)",
+    "children": [
+       {"name": "Session timeout"},
+       {"name": "POST methods"},
+       {"name": "Referer checks"},
+       {"name": "CAPTCHA"},
+       {"name": "Flow analysis"},
+       {"name": "Per-session anti-CSRF token"}
+    ]
+   }]
+  },
+  {
+   "name": "Business logic flaws",
+   "children": [
+   {
+    "name": "Logic attacks (e.g. invalid numeric sign, business process flaws etc.)",
+    "children": [
+       {"name": "Security design review in SDLC"},
+       {"name": "Source code review and testing"}
+    ]
+   }]
+  },
+  {
+   "name": "Buffer overflows and other software vulnerabilities",
+   "children": [
+   {
+    "name": "Software exploit code",
+    "children": [
+       {"name": "Disable error messages to user"},
+       {"name": "Use less suspectible languages and safe handling functions with input validation"},
+       {"name": "Patching"},
+       {"name": "Developer education"}
+    ]
+   }]
+  },
+  {
+   "name": "Web-app runs OS commands directly",
+   "children": [
+   {
+    "name": "OS command injection",
+    "children": [
+       {"name": "Don't use OS commands from the application"},
+       {"name": "Application and WAF input validation"}
+    ]
+   }]
+  },
+  {
+   "name": "Potential user-supplied include for server-code",
+   "children": [
+   {
+    "name": "Remote file include",
+    "children": [
+       {"name": "Minimise user influence on execution path"},
+       {"name": "Validate and initialise variables"},
+       {"name": "Disable register_globals if possible in PHP"},
+       {"name": "Disable via allow_url_fopen and allow_url_include if possible in PHP"}
+    ]
+   }]
+  },
+  {
+   "name": "Header injection vulnerability",
+   "children": [
+   {
+    "name": "HTTP Response Splitting",
+    "children": [
+       {"name": "Filter CRLF in various encodings"},
+       {"name": "WAF/IPS detection"},
+       {"name": "Avoid user input to headers where possible"}
+    ]
+   }]
+  }
+ ]
+}

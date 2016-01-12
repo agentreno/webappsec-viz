@@ -1,0 +1,20 @@
+Weak authentication (HTTP Basic, IP/referer/UA based)
+Hard-coded credentials
+Browser-cached credentials
+Unrestricted login mechanism
+Weak password reset mechanism
+Plaintext password storage
+Access control on client-side
+Path traversal
+Weak TLS/SSL configuration
+Predictable session tokens
+Session fixation
+Inadequate cookie protection
+Weak logout mechanism
+CSRF vulnerability
+XSS vulnerability
+Business logic flaws
+Buffer overflows and other software vulnerabilities
+Shell commands
+Remote file include
+HTTP response splitting
